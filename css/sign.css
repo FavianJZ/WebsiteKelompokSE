@@ -1,0 +1,553 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+}
+
+/* Container layout */
+.container {
+    display: flex;
+    min-height: 100vh;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Form container */
+.form-container {
+    flex: 1;
+    max-width: 500px;
+    background: white;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow-y: auto;
+}
+
+/* Brand section */
+.brand-section {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: #2E8B57;
+    margin-right: 10px;
+}
+
+.brand-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.main-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.2rem;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+
+.subtitle {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: #7f8c8d;
+    font-weight: 400;
+}
+
+/* Form styles */
+.auth-form {
+    width: 100%;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    color: #2c3e50;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 15px 20px 15px 50px;
+    border: 2px solid #e1e8ed;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+}
+
+.input-wrapper input:focus {
+    outline: none;
+    border-color: #2E8B57;
+    background: white;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 18px;
+    color: #95a5a6;
+    font-size: 1rem;
+    z-index: 1;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    background: none;
+    border: none;
+    color: #95a5a6;
+    cursor: pointer;
+    padding: 5px;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+    color: #2E8B57;
+}
+
+/* Password strength indicator */
+.password-strength {
+    margin-top: 8px;
+}
+
+.strength-bar {
+    width: 100%;
+    height: 4px;
+    background: #e1e8ed;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 5px;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: all 0.3s ease;
+    border-radius: 2px;
+}
+
+.strength-text {
+    font-size: 0.8rem;
+    color: #7f8c8d;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Form options */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+    font-size: 0.9rem;
+    color: #2c3e50;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.remember-me input[type="checkbox"] {
+    display: none;
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #e1e8ed;
+    border-radius: 4px;
+    margin-right: 8px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.remember-me input[type="checkbox"]:checked + .checkmark {
+    background: #2E8B57;
+    border-color: #2E8B57;
+}
+
+.remember-me input[type="checkbox"]:checked + .checkmark::after {
+    content: '✓';
+    position: absolute;
+    color: white;
+    font-size: 12px;
+    top: -2px;
+    left: 2px;
+}
+
+.forgot-password, .terms-link {
+    color: #2E8B57;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover, .terms-link:hover {
+    color: #2E8B57;
+    text-decoration: underline;
+}
+
+/* Submit button */
+.submit-btn {
+    width: 100%;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.btn-icon {
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover .btn-icon {
+    transform: translateX(5px);
+}
+
+/* Divider */
+.divider {
+    text-align: center;
+    margin: 25px 0;
+    position: relative;
+}
+
+.divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: #e1e8ed;
+}
+
+.divider span {
+    background: white;
+    padding: 0 20px;
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    font-family: 'Montserrat', sans-serif;
+}
+
+/* Social buttons */
+.social-buttons {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.social-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #e1e8ed;
+    background: white;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.social-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.google-btn:hover {
+    border-color: #db4437;
+    color: #db4437;
+}
+
+.facebook-btn:hover {
+    border-color: #1877f2;
+    color: #1877f2;
+}
+
+/* Switch form */
+.switch-form {
+    text-align: center;
+    font-size: 0.95rem;
+    color: #7f8c8d;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.switch-link {
+    color: #2E8B57;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.switch-link:hover {
+    color: #2E8B57;
+    text-decoration: underline;
+}
+
+/* Image section */
+.image-section {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(76, 175, 80, 0.9), rgba(27, 148, 33, 0.9)),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><pattern id="food-pattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="25" r="3" fill="rgba(255,255,255,0.1)"/><circle cx="25" cy="50" r="2" fill="rgba(255,255,255,0.05)"/><circle cx="75" cy="75" r="2.5" fill="rgba(255,255,255,0.08)"/></pattern></defs><rect width="100%" height="100%" fill="url(%23food-pattern)"/></svg>');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-overlay {
+    text-align: center;
+    color: white;
+    padding: 40px;
+    max-width: 500px;
+}
+
+.overlay-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.overlay-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+/* Stats */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    display: block;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.stat-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+/* Features */
+.features {
+    margin-top: 40px;
+    text-align: left;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+    margin-right: 15px;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Loading animation */
+.submit-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.submit-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Password strength colors */
+.strength-weak { background: #e74c3c; }
+.strength-medium { background: #f39c12; }
+.strength-strong { background: #27ae60; }
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    .image-section {
+        min-height: 200px;
+        order: -1;
+    }
+    
+    .form-container {
+        max-width: 100%;
+        padding: 30px 20px;
+    }
+    
+    .main-title {
+        font-size: 1.8rem;
+    }
+    
+    .overlay-title {
+        font-size: 2rem;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+    
+    .stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .social-buttons {
+        flex-direction: column;
+    }
+    
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .form-container {
+        padding: 20px 15px;
+    }
+    
+    .brand-name {
+        font-size: 1.6rem;
+    }
+    
+    .main-title {
+        font-size: 1.5rem;
+    }
+    
+    .overlay-title {
+        font-size: 1.6rem;
+    }
+    
+    .overlay-text {
+        font-size: 1rem;
+    }
+    
+    .image-overlay {
+        padding: 20px;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    .input-wrapper input {
+        border-color: #333;
+    }
+    
+    .input-wrapper input:focus {
+        border-color: #000;
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
