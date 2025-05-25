@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroWaste - Complete Your Order</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex; /* GANTI grid -> flex */
+            flex-direction: column; /* Tampilkan secara vertikal */
+            gap: 2rem;
+        }
+
+
+        /* Item Details */
+        .item-details {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+        }
+
+        .item-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .item-info h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-restaurant {
+            color: #667eea;
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .item-price {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .discounted-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4CAF50;
+        }
+
+        .discount-badge {
+            background: #ff4757;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        /* Additional Options */
+        .additional-options {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #f0f0f0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .option-item {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .option-item:hover {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .option-item.selected {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .option-item h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .option-price {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        /* Order Summary */
+        .order-summary {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            height: fit-content;
+            position: sticky;
+            top: 120px;
+        }
+
+        .summary-section {
+            margin-bottom: 2rem;
+        }
+
+        .summary-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .voucher-input {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .voucher-input input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .voucher-input button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .voucher-list {
+            display: grid;
+            gap: 0.5rem;
+        }
+
+        .voucher-item {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            padding: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .voucher-item:hover {
+            border-color: #667eea;
+        }
+
+        .voucher-item.selected {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .voucher-discount {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .payment-methods {
+            display: grid;
+            gap: 0.75rem;
+        }
+
+        .payment-item {
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .payment-item:hover {
+            border-color: #667eea;
+        }
+
+        .payment-item.selected {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .payment-icon {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .summary-row:last-child {
+            margin-bottom: 0;
+            padding-top: 1rem;
+            border-top: 2px solid #f0f0f0;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .buy-button {
+            width: 100%;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1.25rem 2rem;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .buy-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Success Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .popup {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            transform: scale(0.8);
+            animation: popIn 0.3s ease forwards;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .popup h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .popup p {
+            color: #666;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .dashboard-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dashboard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+                gap: 1.5rem;
+            }
+
+            .header-container {
+                padding: 1rem;
+            }
+
+            .item-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .options-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .order-summary {
+                position: static;
+            }
+
+            .popup {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">ZeroWaste</a>
+            <button class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Item Details -->
+        <div class="item-details">
+            <div class="item-header">
+                <div class="item-image" id="itemIcon">
+                    <i class="fas fa-pizza-slice"></i>
+                </div>
+                <div class="item-info">
+                    <h1 id="itemTitle">Mixed Pizza Combo</h1>
+                    <div class="item-restaurant" id="itemRestaurant">Mario's Italian Kitchen</div>
+                    <div class="item-description" id="itemDescription">
+                        Delicious combination of Margherita and Pepperoni pizza slices with garlic bread and soft drink. Perfect for sharing or a hearty meal.
+                    </div>
+                    <div class="item-price">
+                        <span class="original-price" id="originalPrice">$25.99</span>
+                        <span class="discounted-price" id="discountedPrice">$8.99</span>
+                        <span class="discount-badge" id="discountBadge">65% OFF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional Options -->
+            <div class="additional-options">
+                <h3 class="section-title">
+                    <i class="fas fa-plus-circle"></i>
+                    Additional Options
+                </h3>
+                <div class="options-grid" id="additionalOptions">
+                    <div class="option-item" data-option="extra-cheese" data-price="2.50">
+                        <h4>Extra Cheese</h4>
+                        <div class="option-price">+$2.50</div>
+                    </div>
+                    <div class="option-item" data-option="extra-sauce" data-price="1.50">
+                        <h4>Extra Sauce</h4>
+                        <div class="option-price">+$1.50</div>
+                    </div>
+                    <div class="option-item" data-option="spicy-level" data-price="0.00">
+                        <h4>Extra Spicy</h4>
+                        <div class="option-price">Free</div>
+                    </div>
+                    <div class="option-item" data-option="extra-drink" data-price="3.00">
+                        <h4>Extra Drink</h4>
+                        <div class="option-price">+$3.00</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="order-summary">
+            <h3 class="section-title">
+                <i class="fas fa-receipt"></i>
+                Order Summary
+            </h3>
+
+            <!-- Voucher Section -->
+            <div class="summary-section">
+                <h4 style="margin-bottom: 1rem; color: #333;">Apply Voucher</h4>
+                <div class="voucher-input">
+                    <input type="text" placeholder="Enter voucher code" id="voucherInput">
+                    <button onclick="applyVoucher()">Apply</button>
+                </div>
+                <div class="voucher-list">
+                    <div class="voucher-item" data-voucher="SAVE10" data-discount="10">
+                        <div>
+                            <div style="font-weight: 600;">SAVE10</div>
+                            <div style="font-size: 0.8rem; color: #666;">10% off your order</div>
+                        </div>
+                        <div class="voucher-discount">-10%</div>
+                    </div>
+                    <div class="voucher-item" data-voucher="FIRST15" data-discount="15">
+                        <div>
+                            <div style="font-weight: 600;">FIRST15</div>
+                            <div style="font-size: 0.8rem; color: #666;">15% off first order</div>
+                        </div>
+                        <div class="voucher-discount">-15%</div>
+                    </div>
+                    <div class="voucher-item" data-voucher="FREE5" data-discount="5">
+                        <div>
+                            <div style="font-weight: 600;">FREE5</div>
+                            <div style="font-size: 0.8rem; color: #666;">$5 off any order</div>
+                        </div>
+                        <div class="voucher-discount">-$5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method -->
+            <div class="summary-section">
+                <h4 style="margin-bottom: 1rem; color: #333;">Payment Method</h4>
+                <div class="payment-methods">
+                    <div class="payment-item selected" data-payment="credit-card">
+                        <div class="payment-icon" style="color: #1976d2;">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">Credit Card</div>
+                            <div style="font-size: 0.8rem; color: #666;">Visa, Mastercard, Amex</div>
+                        </div>
+                    </div>
+                    <div class="payment-item" data-payment="paypal">
+                        <div class="payment-icon" style="color: #0070ba;">
+                            <i class="fab fa-paypal"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">PayPal</div>
+                            <div style="font-size: 0.8rem; color: #666;">Pay with PayPal balance</div>
+                        </div>
+                    </div>
+                    <div class="payment-item" data-payment="google-pay">
+                        <div class="payment-icon" style="color: #4285f4;">
+                            <i class="fab fa-google-pay"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">Google Pay</div>
+                            <div style="font-size: 0.8rem; color: #666;">Quick & secure payment</div>
+                        </div>
+                    </div>
+                    <div class="payment-item" data-payment="cash">
+                        <div class="payment-icon" style="color: #4CAF50;">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div>
+                            <div style="font-weight: 600;">Cash on Restaurant</div>
+                            <div style="font-size: 0.8rem; color: #666;">Pay in the counter</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Price Summary -->
+            <div class="summary-section">
+                <div class="summary-row">
+                    <span>Item Price:</span>
+                    <span id="itemPriceDisplay">$8.99</span>
+                </div>
+                <div class="summary-row" id="addonsRow" style="display: none;">
+                    <span>Add-ons:</span>
+                    <span id="addonsPrice">$0.00</span>
+                </div>
+                <div class="summary-row" id="voucherRow" style="display: none;">
+                    <span>Voucher Discount:</span>
+                    <span id="voucherDiscount" style="color: #4CAF50;">-$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Total:</span>
+                    <span id="finalTotal" style="color: #4CAF50; font-size: 1.3rem;">$8.99</span>
+                </div>
+            </div>
+
+            <button class="buy-button" onclick="completePurchase()">
+                <i class="fas fa-shopping-cart"></i>
+                Complete Purchase
+            </button>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="popup-overlay" id="successPopup">
+        <div class="popup">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h2>Order Successful!</h2>
+            <p>Your order has been placed successfully. You will receive a confirmation email shortly with tracking details.</p>
+            <button class="dashboard-btn" onclick="goToDashboard()">
+                Back to Dashboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Sample item data (would normally come from URL parameters or API)
+        const itemData = {
+            'pizza-combo': {
+                title: 'Mixed Pizza Combo',
+                restaurant: 'Mario\'s Italian Kitchen',
+                description: 'Delicious combination of Margherita and Pepperoni pizza slices with garlic bread and soft drink. Perfect for sharing or a hearty meal.',
+                icon: 'fas fa-pizza-slice',
+                originalPrice: 25.99,
+                discountedPrice: 8.99,
+                discount: 65,
+                options: [
+                    { id: 'extra-cheese', name: 'Extra Cheese', price: 2.50 },
+                    { id: 'extra-sauce', name: 'Extra Sauce', price: 1.50 },
+                    { id: 'spicy-level', name: 'Extra Spicy', price: 0.00 },
+                    { id: 'extra-drink', name: 'Extra Drink', price: 3.00 }
+                ]
+            },
+            'burger-set': {
+                title: 'Gourmet Burger Set',
+                restaurant: 'Burger Junction',
+                description: 'Premium beef burger with crispy bacon, fresh lettuce, tomatoes, and special sauce. Served with seasoned fries and coleslaw.',
+                icon: 'fas fa-hamburger',
+                originalPrice: 18.50,
+                discountedPrice: 6.50,
+                discount: 65,
+                options: [
+                    { id: 'extra-bacon', name: 'Extra Bacon', price: 3.00 },
+                    { id: 'cheese-upgrade', name: 'Cheese Upgrade', price: 2.00 },
+                    { id: 'large-fries', name: 'Large Fries', price: 2.50 },
+                    { id: 'onion-rings', name: 'Onion Rings', price: 3.50 }
+                ]
+            },
+            'sushi-platter': {
+                title: 'Fresh Sushi Platter',
+                restaurant: 'Sakura Sushi Bar',
+                description: 'Assorted fresh sushi including salmon, tuna, and shrimp nigiri, plus California and spicy tuna rolls. Served with wasabi, ginger, and soy sauce.',
+                icon: 'fas fa-fish',
+                originalPrice: 32.00,
+                discountedPrice: 12.99,
+                discount: 60,
+                options: [
+                    { id: 'extra-wasabi', name: 'Extra Wasabi', price: 1.00 },
+                    { id: 'extra-ginger', name: 'Extra Ginger', price: 1.00 },
+                    { id: 'miso-soup', name: 'Miso Soup', price: 3.00 },
+                    { id: 'extra-rolls', name: 'Extra Rolls (4pcs)', price: 5.00 }
+                ]
+            }
+        };
+
+        let selectedOptions = [];
+        let selectedVoucher = null;
+        let selectedPayment = 'credit-card';
+        let currentItem = null;
+
+        // Initialize page
+        function initializePage() {
+            // In a real app, this would come from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            const itemId = urlParams.get('item') || 'pizza-combo';
+            
+            currentItem = itemData[itemId];
+            if (!currentItem) {
+                currentItem = itemData['pizza-combo'];
+            }
+
+            populateItemDetails();
+            setupEventListeners();
+            updatePriceSummary();
+        }
+
+        // Populate item details
+        function populateItemDetails() {
+            document.getElementById('itemIcon').innerHTML = `<i class="${currentItem.icon}"></i>`;
+            document.getElementById('itemTitle').textContent = currentItem.title;
+            document.getElementById('itemRestaurant').textContent = currentItem.restaurant;
+            document.getElementById('itemDescription').textContent = currentItem.description;
+            document.getElementById('originalPrice').textContent = `$${currentItem.originalPrice.toFixed(2)}`;
+            document.getElementById('discountedPrice').textContent = `$${currentItem.discountedPrice.toFixed(2)}`;
+            document.getElementById('discountBadge').textContent = `${currentItem.discount}% OFF`;
+
+            // Populate additional options
+            const optionsContainer = document.getElementById('additionalOptions');
+            optionsContainer.innerHTML = '';
+            
+            currentItem.options.forEach(option => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option-item';
+                optionElement.setAttribute('data-option', option.id);
+                optionElement.setAttribute('data-price', option.price);
+                optionElement.innerHTML = `
+                    <h4>${option.name}</h4>
+                    <div class="option-price">${option.price === 0 ? 'Free' : '+$' + option.price.toFixed(2)}</div>
+                `;
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Additional options
+            document.querySelectorAll('.option-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    this.classList.toggle('selected');
+                    updateSelectedOptions();
+                    updatePriceSummary();
+                });
+            });
+
+            // Vouchers
+            document.querySelectorAll('.voucher-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.voucher-item').forEach(v => v.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedVoucher = {
+                        code: this.getAttribute('data-voucher'),
+                        discount: parseInt(this.getAttribute('data-discount'))
+                    };
+                    updatePriceSummary();
+                });
+            });
+
+            // Payment methods
+            document.querySelectorAll('.payment-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    document.querySelectorAll('.payment-item').forEach(p => p.classList.remove('selected'));
+                    this.classList.add('selected');
+                    selectedPayment = this.getAttribute('data-payment');
+                });
+            });
+        }
+
+        // Update selected options
+        function updateSelectedOptions() {
+            selectedOptions = [];
+            document.querySelectorAll('.option-item.selected').forEach(item => {
+                selectedOptions.push({
+                    id: item.getAttribute('data-option'),
+                    price: parseFloat(item.getAttribute('data-price'))
+                });
+            });
+        }
+
+        // Apply voucher from input
+        function applyVoucher() {
+            const voucherCode = document.getElementById('voucherInput').value.trim().toUpperCase();
+            const voucherItem = document.querySelector(`[data-voucher="${voucherCode}"]`);
+            
+            if (voucherItem) {
+                document.querySelectorAll('.voucher-item').forEach(v => v.classList.remove('selected'));
+                voucherItem.classList.add('selected');
+                selectedVoucher = {
+                    code: voucherCode,
+                    discount: parseInt(voucherItem.getAttribute('data-discount'))
+                };
+                updatePriceSummary();
+                showNotification('Voucher applied successfully!', 'success');
+            } else {
+                showNotification('Invalid voucher code', 'error');
+            }
+            
+            document.getElementById('voucherInput').value = '';
+        }
+
+        // Update price summary
+        function updatePriceSummary() {
+            const itemPrice = currentItem.discountedPrice;
+            const addonsPrice = selectedOptions.reduce((sum, option) => sum + option.price, 0);
+            let subtotal = itemPrice + addonsPrice;
+            
+            document.getElementById('itemPriceDisplay').textContent = `$${itemPrice.toFixed(2)}`;
+            
+            // Show/hide addons row
+            if (addonsPrice > 0) {
+                document.getElementById('addonsRow').style.display = 'flex';
+                document.getElementById('addonsPrice').textContent = `+$${addonsPrice.toFixed(2)}`;
+            } else {
+                document.getElementById('addonsRow').style.display = 'none';
+            }
+            
+            // Calculate voucher discount
+            let voucherDiscount = 0;
+            if (selectedVoucher) {
+                if (selectedVoucher.code === 'FREE5') {
+                    voucherDiscount = 5;
+                } else {
+                    voucherDiscount = (subtotal * selectedVoucher.discount) / 100;
+                }
+                document.getElementById('voucherRow').style.display = 'flex';
+                document.getElementById('voucherDiscount').textContent = `-${voucherDiscount.toFixed(2)}`;
+            } else {
+                document.getElementById('voucherRow').style.display = 'none';
+            }
+            
+            const finalTotal = Math.max(0, subtotal - voucherDiscount);
+            document.getElementById('finalTotal').textContent = `${finalTotal.toFixed(2)}`;
+        }
+
+        // Complete purchase
+        function completePurchase() {
+            const buyButton = document.querySelector('.buy-button');
+            buyButton.disabled = true;
+            buyButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+            
+            // Simulate processing time
+            setTimeout(() => {
+                buyButton.disabled = false;
+                buyButton.innerHTML = '<i class="fas fa-shopping-cart"></i> Complete Purchase';
+                showSuccessPopup();
+            }, 2000);
+        }
+
+        // Show success popup
+        function showSuccessPopup() {
+            document.getElementById('successPopup').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Go to dashboard
+        function goToDashboard() {
+            // In a real app, this would redirect to dash.html
+            window.location.href = 'dash.html';
+        }
+
+        // Go back to cart
+        function goBack() {
+            window.history.back();
+        }
+
+        // Show notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                z-index: 1001;
+                transform: translateX(100%);
+                transition: transform 0.3s ease;
+                max-width: 300px;
+                font-weight: 500;
+            `;
+            
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(0)';
+            }, 100);
+            
+            setTimeout(() => {
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Initialize page when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initializePage);
+
+        // Allow Enter key to apply voucher
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && document.activeElement === document.getElementById('voucherInput')) {
+                applyVoucher();
+            }
+        });
+
+        // Close popup when clicking outside
+        document.getElementById('successPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+    </script>
+</body>
+</html>

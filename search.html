@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroWaste - Search Food & Restaurants</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Search and Filter */
+        .search-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        /* Toggle Buttons */
+        .content-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            padding: 0.5rem;
+            border-radius: 15px;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            background: #f8f9fa;
+            border: 2px solid #e0e0e0;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .filter-tag.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: #667eea;
+        }
+
+        .filter-tag:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        /* Food Card */
+        .food-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .food-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .food-image {
+            height: 200px;
+            background: linear-gradient(135deg, #ff9a9e, #fecfef);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-image i {
+            font-size: 3rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .food-content {
+            padding: 1.5rem;
+        }
+
+        .food-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .food-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .food-category {
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .food-restaurant {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .food-price {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #22c55e;
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .food-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        /* Restaurant Card */
+        .resto-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .resto-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .resto-image {
+            height: 200px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .resto-image i {
+            font-size: 3rem;
+            color: white;
+            opacity: 0.8;
+        }
+
+        .resto-content {
+            padding: 1.5rem;
+        }
+
+        .resto-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .resto-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.25rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .resto-category {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .resto-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            background: #ffd700;
+            padding: 0.25rem 0.5rem;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .resto-address {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Action Buttons */
+        .item-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .order-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(238, 90, 36, 0.4);
+        }
+
+        .view-menu-btn {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .view-menu-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .favorite-btn {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            padding: 0.75rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .favorite-btn:hover,
+        .favorite-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Badge */
+        .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .discount-badge {
+            background: rgba(255, 107, 107, 0.9);
+            color: white;
+        }
+
+        /* Empty State */
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 3rem 2rem;
+            color: white;
+        }
+
+        .empty-state i {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .search-container {
+                flex-direction: column;
+            }
+
+            .search-box {
+                min-width: unset;
+            }
+
+            .header-container {
+                padding: 0 1rem;
+            }
+
+            .content-toggle {
+                flex-direction: column;
+            }
+        }
+
+        /* Animation */
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .food-image::before,
+        .resto-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            animation: shimmer 3s infinite;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">ZeroWaste</a>
+            <a href="dash.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+                Back to Dashboard
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Discover Food & Restaurants</h1>
+            <p class="page-subtitle">Find your favorite dishes and restaurants with exclusive deals</p>
+        </div>
+
+        <!-- Search Section -->
+        <div class="search-section">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search food or restaurants..." id="searchInput">
+                </div>
+            </div>
+            
+            <!-- Content Toggle -->
+            <div class="content-toggle">
+                <button class="toggle-btn active" data-content="all">
+                    <i class="fas fa-th-large"></i>
+                    All Items
+                </button>
+                <button class="toggle-btn" data-content="food">
+                    <i class="fas fa-utensils"></i>
+                    Food Only
+                </button>
+                <button class="toggle-btn" data-content="restaurants">
+                    <i class="fas fa-store"></i>
+                    Restaurants Only
+                </button>
+            </div>
+
+            <!-- Filter Tags -->
+            <div class="filter-tags">
+                <div class="filter-tag active" data-filter="all">All Categories</div>
+                <div class="filter-tag" data-filter="italian">Italian</div>
+                <div class="filter-tag" data-filter="asian">Asian</div>
+                <div class="filter-tag" data-filter="american">American</div>
+                <div class="filter-tag" data-filter="healthy">Healthy</div>
+                <div class="filter-tag" data-filter="dessert">Dessert</div>
+                <div class="filter-tag" data-filter="fast-food">Fast Food</div>
+            </div>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid" id="contentGrid">
+            <!-- Content will be populated by JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Sample food data
+        const foods = [
+            {
+                id: 'f1',
+                type: 'food',
+                name: "Margherita Pizza",
+                category: "Italian",
+                restaurant: "Mario's Italian Kitchen",
+                restaurantId: 1,
+                price: 24.99,
+                description: "Classic pizza with fresh mozzarella, tomatoes, and basil",
+                image: "pizza-slice",
+                badge: "Popular",
+                discount: 15,
+                favorite: false
+            },
+            {
+                id: 'f2',
+                type: 'food',
+                name: "Chicken Teriyaki Bowl",
+                category: "Asian",
+                restaurant: "Sakura Sushi Bar",
+                restaurantId: 3,
+                price: 18.50,
+                description: "Grilled chicken with teriyaki sauce, steamed rice, and vegetables",
+                image: "bowl-rice",
+                badge: "Healthy",
+                discount: 0,
+                favorite: true
+            },
+            {
+                id: 'f3',
+                type: 'food',
+                name: "Classic Cheeseburger",
+                category: "American",
+                restaurant: "Burger Junction",
+                restaurantId: 2,
+                price: 16.99,
+                description: "Juicy beef patty with cheese, lettuce, tomato, and special sauce",
+                image: "hamburger",
+                badge: "Bestseller",
+                discount: 20,
+                favorite: false
+            },
+            {
+                id: 'f4',
+                type: 'food',
+                name: "Caesar Salad",
+                category: "Healthy",
+                restaurant: "Green Bites",
+                restaurantId: 4,
+                price: 14.99,
+                description: "Fresh romaine lettuce, parmesan cheese, croutons, and caesar dressing",
+                image: "leaf",
+                badge: "Fresh",
+                discount: 0,
+                favorite: false
+            },
+            {
+                id: 'f5',
+                type: 'food',
+                name: "Chocolate Lava Cake",
+                category: "Dessert",
+                restaurant: "Sweet Dreams Bakery",
+                restaurantId: 6,
+                price: 9.99,
+                description: "Warm chocolate cake with molten chocolate center and vanilla ice cream",
+                image: "birthday-cake",
+                badge: "Sweet",
+                discount: 10,
+                favorite: true
+            },
+            {
+                id: 'f6',
+                type: 'food',
+                name: "Pad Thai Noodles",
+                category: "Asian",
+                restaurant: "Bangkok Street Food",
+                restaurantId: 7,
+                price: 15.99,
+                description: "Traditional Thai stir-fried noodles with shrimp, tofu, and peanuts",
+                image: "utensils",
+                badge: "Authentic",
+                discount: 0,
+                favorite: false
+            }
+        ];
+
+        // Sample restaurant data
+        const restaurants = [
+            {
+                id: 'r1',
+                type: 'restaurant',
+                name: "Mario's Italian Kitchen",
+                category: "Italian",
+                address: "123 Main Street, Downtown",
+                rating: 4.8,
+                image: "pizza-slice",
+                badge: "Top Rated",
+                favorite: false
+            },
+            {
+                id: 'r2',
+                type: 'restaurant',
+                name: "Burger Junction",
+                category: "American",
+                address: "456 Oak Avenue, City Center",
+                rating: 4.5,
+                image: "hamburger",
+                badge: "Popular",
+                favorite: true
+            },
+            {
+                id: 'r3',
+                type: 'restaurant',
+                name: "Sakura Sushi Bar",
+                category: "Asian",
+                address: "789 Cherry Blossom Lane",
+                rating: 4.9,
+                image: "fish",
+                badge: "Premium",
+                favorite: false
+            },
+            {
+                id: 'r4',
+                type: 'restaurant',
+                name: "Green Bites",
+                category: "Healthy",
+                address: "321 Eco Street, Green District",
+                rating: 4.7,
+                image: "leaf",
+                badge: "Eco-Friendly",
+                favorite: true
+            },
+            {
+                id: 'r5',
+                type: 'restaurant',
+                name: "Sweet Dreams Bakery",
+                category: "Dessert",
+                address: "987 Sugar Lane, Sweet District",
+                rating: 4.6,
+                image: "birthday-cake",
+                badge: "Sweet Deals",
+                favorite: false
+            },
+            {
+                id: 'r6',
+                type: 'restaurant',
+                name: "Bangkok Street Food",
+                category: "Asian",
+                address: "147 Thailand Street, Asia Town",
+                rating: 4.5,
+                image: "utensils",
+                badge: "Authentic",
+                favorite: true
+            }
+        ];
+
+        // Combine all items
+        const allItems = [...foods, ...restaurants];
+        let filteredItems = [...allItems];
+        let currentContentType = 'all';
+        let currentFilter = 'all';
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderContent(allItems);
+            setupEventListeners();
+        });
+
+        // Setup event listeners
+        function setupEventListeners() {
+            // Search functionality
+            document.getElementById('searchInput').addEventListener('input', handleSearch);
+
+            // Content toggle functionality
+            document.querySelectorAll('.toggle-btn').forEach(btn => {
+                btn.addEventListener('click', handleContentToggle);
+            });
+
+            // Filter functionality
+            document.querySelectorAll('.filter-tag').forEach(tag => {
+                tag.addEventListener('click', handleFilter);
+            });
+        }
+
+        // Handle content toggle
+        function handleContentToggle(e) {
+            // Update active toggle button
+            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+            e.target.classList.add('active');
+
+            currentContentType = e.target.dataset.content;
+            applyFilters();
+        }
+
+        // Handle filter
+        function handleFilter(e) {
+            // Update active filter tag
+            document.querySelectorAll('.filter-tag').forEach(tag => tag.classList.remove('active'));
+            e.target.classList.add('active');
+
+            currentFilter = e.target.dataset.filter;
+            applyFilters();
+        }
+
+        // Handle search
+        function handleSearch(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            applyFilters(searchTerm);
+        }
+
+        // Apply all filters
+        function applyFilters(searchTerm = '') {
+            let items = [...allItems];
+
+            // Apply content type filter
+            if (currentContentType !== 'all') {
+                if (currentContentType === 'food') {
+                    items = items.filter(item => item.type === 'food');
+                } else if (currentContentType === 'restaurants') {
+                    items = items.filter(item => item.type === 'restaurant');
+                }
+            }
+
+            // Apply category filter
+            if (currentFilter !== 'all') {
+                items = items.filter(item => {
+                    const category = item.category.toLowerCase();
+                    if (currentFilter === 'fast-food') {
+                        return category === 'american' || item.name.toLowerCase().includes('burger');
+                    }
+                    return category === currentFilter;
+                });
+            }
+
+            // Apply search filter
+            if (searchTerm) {
+                items = items.filter(item => 
+                    item.name.toLowerCase().includes(searchTerm) ||
+                    item.category.toLowerCase().includes(searchTerm) ||
+                    (item.restaurant && item.restaurant.toLowerCase().includes(searchTerm))
+                );
+            }
+
+            filteredItems = items;
+            renderContent(filteredItems);
+        }
+
+        // Render content
+        function renderContent(items) {
+            const grid = document.getElementById('contentGrid');
+            
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No items found</h3>
+                        <p>Try adjusting your search or filters</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = items.map(item => {
+                if (item.type === 'food') {
+                    return renderFoodCard(item);
+                } else {
+                    return renderRestaurantCard(item);
+                }
+            }).join('');
+        }
+
+        // Render food card
+        function renderFoodCard(food) {
+            const discountPrice = food.discount > 0 ? (food.price * (1 - food.discount / 100)).toFixed(2) : null;
+            
+            return `
+                <div class="food-card" data-id="${food.id}">
+                    <div class="food-image">
+                        <i class="fas fa-${food.image}"></i>
+                        <div class="badge ${food.discount > 0 ? 'discount-badge' : ''}">
+                            ${food.discount > 0 ? `${food.discount}% OFF` : food.badge}
+                        </div>
+                    </div>
+                    <div class="food-content">
+                        <div class="food-header">
+                            <div>
+                                <h3 class="food-name">${food.name}</h3>
+                                <div class="food-category">${food.category} Food</div>
+                            </div>
+                            <div class="food-price">
+                                ${discountPrice ? `
+                                    <span style="text-decoration: line-through; opacity: 0.7; margin-right: 0.5rem;">$${food.price}</span>
+                                    $${discountPrice}
+                                ` : `$${food.price}`}
+                            </div>
+                        </div>
+                        <div class="food-restaurant">
+                            <i class="fas fa-store"></i>
+                            <span>${food.restaurant}</span>
+                        </div>
+                        <div class="food-description">${food.description}</div>
+                        <div class="item-actions">
+                            <a href="deals.html?food=${encodeURIComponent(food.name)}&restaurant=${encodeURIComponent(food.restaurant)}&id=${food.id}" class="order-btn">
+                                <i class="fas fa-shopping-cart"></i>
+                                Order Now
+                            </a>
+                            <button class="favorite-btn ${food.favorite ? 'active' : ''}" onclick="toggleFavorite('${food.id}')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Render restaurant card
+        function renderRestaurantCard(restaurant) {
+            return `
+                <div class="resto-card" data-id="${restaurant.id}">
+                    <div class="resto-image">
+                        <i class="fas fa-${restaurant.image}"></i>
+                        <div class="badge">${restaurant.badge}</div>
+                    </div>
+                    <div class="resto-content">
+                        <div class="resto-header">
+                            <div>
+                                <h3 class="resto-name">${restaurant.name}</h3>
+                                <div class="resto-category">${restaurant.category} Restaurant</div>
+                            </div>
+                            <div class="resto-rating">
+                                <i class="fas fa-star"></i>
+                                ${restaurant.rating}
+                            </div>
+                        </div>
+                        <div class="resto-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${restaurant.address}</span>
+                        </div>
+                        <div class="item-actions">
+                            <a href="deals.html?restaurant=${encodeURIComponent(restaurant.name)}&id=${restaurant.id}" class="view-menu-btn">
+                                <i class="fas fa-eye"></i>
+                                View Menu
+                            </a>
+                            <button class="favorite-btn ${restaurant.favorite ? 'active' : ''}" onclick="toggleFavorite('${restaurant.id}')">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Toggle favorite function
+        function toggleFavorite(id) {
+            const item = allItems.find(item => item.id === id);
+            if (item) {
+                item.favorite = !item.favorite;
+                renderContent(filteredItems);
+                
+                // Show feedback
+                const action = item.favorite ? 'added to' : 'removed from';
+                showNotification(`${item.name} ${action} favorites!`);
+            }
+        }
+
+        // Show notification
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: 10px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+                z-index: 1000;
+                animation: slideIn 0.3s ease;
+                max-width: 300px;
+            `;
+            notification.innerHTML = `
+                <i class="fas fa-check-circle" style="margin-right: 0.5rem;"></i>
+                ${message}
+            `;
+
+            // Add animation keyframes if not exists
+            if (!document.querySelector('#notification-styles')) {
+                const style = document.createElement('style');
+                style.id = 'notification-styles';
+                style.textContent = `
+                    @keyframes slideIn {
+                        from { transform: translateX(100%); opacity: 0; }
+                        to { transform: translateX(0); opacity: 1; }
+                    }
+                    @keyframes slideOut {
+                        from { transform: translateX(0); opacity: 1; }
+                        to { transform: translateX(100%); opacity: 0; }
+                    }
+                `;
+                document.head.appendChild(style);
+            }
+
+            document.body.appendChild(notification);
+
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 3000);
+        }
+
+        // Add loading animation on page load
+        window.addEventListener('load', function() {
+            const cards = document.querySelectorAll('.food-card, .resto-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 150);
+            });
+        });
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to cards
+            setTimeout(() => {
+                const cards = document.querySelectorAll('.food-card, .resto-card');
+                cards.forEach(card => {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-8px) scale(1.02)';
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0) scale(1)';
+                    });
+                });
+            }, 1000);
+        });
+
+        // Enhanced search with debouncing
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                handleSearch(e);
+            }, 300);
+        });
+
+        // Add smooth scroll to top when filters change
+        function smoothScrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Update filter and toggle functions to include smooth scroll
+        const originalHandleFilter = handleFilter;
+        const originalHandleContentToggle = handleContentToggle;
+
+        handleFilter = function(e) {
+            originalHandleFilter(e);
+            if (window.scrollY > 200) {
+                smoothScrollToTop();
+            }
+        };
+
+        handleContentToggle = function(e) {
+            originalHandleContentToggle(e);
+            if (window.scrollY > 200) {
+                smoothScrollToTop();
+            }
+        };
+    </script>
+</body>
+</html>

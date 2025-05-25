@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroWaste - Restaurant Details</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Restaurant Hero Section */
+        .restaurant-hero {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .restaurant-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+            margin: 0 auto 1.5rem;
+        }
+
+        .restaurant-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .restaurant-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+        }
+
+        .rating {
+            color: #ffa500;
+        }
+
+        .cuisine {
+            color: #667eea;
+        }
+
+        .restaurant-description {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .restaurant-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #4CAF50;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        /* Menu Section */
+        .menu-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .section-subtitle {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .menu-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            background: white;
+            border: 2px solid #e1e5e9;
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: #4CAF50;
+            color: white;
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .menu-item {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .menu-item.featured::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+        }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-info {
+            flex: 1;
+        }
+
+        .menu-item-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            margin-left: 1rem;
+        }
+
+        .menu-item-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .menu-item-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .menu-item-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .original-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .discounted-price {
+            font-weight: 700;
+            color: #4CAF50;
+            font-size: 1.2rem;
+        }
+
+        .discount-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+        }
+
+        .order-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .order-btn.disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        .order-btn.disabled:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .availability {
+            font-size: 0.8rem;
+            color: #4CAF50;
+            font-weight: 500;
+            margin-top: 0.5rem;
+        }
+
+        .availability.limited {
+            color: #ff9800;
+        }
+
+        .availability.sold-out {
+            color: #f44336;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .header-container {
+                padding: 1rem;
+            }
+
+            .restaurant-hero,
+            .menu-section,
+            .contact-section {
+                padding: 1.5rem;
+            }
+
+            .restaurant-name {
+                font-size: 2rem;
+            }
+
+            .restaurant-info {
+                gap: 1rem;
+            }
+
+            .menu-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-filters {
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Animation */
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">ZeroWaste</a>
+            <a href="#" class="back-btn" onclick="goBack()">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Restaurant Hero Section -->
+        <section class="restaurant-hero fade-in">
+            <div class="restaurant-image" id="restaurantImage">
+                <i class="fas fa-pizza-slice"></i>
+            </div>
+            <h1 class="restaurant-name" id="restaurantName">Mario's Italian Kitchen</h1>
+            <div class="restaurant-info">
+                <div class="info-item">
+                    <i class="fas fa-star rating"></i>
+                    <span id="restaurantRating">4.8</span>
+                </div>
+                <div class="info-item cuisine">
+                    <i class="fas fa-utensils"></i>
+                    <span id="restaurantCuisine">Italian Cuisine</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-clock"></i>
+                    <span>Open until 11:00 PM</span>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>1.2 km away</span>
+                </div>
+            </div>
+            <p class="restaurant-description" id="restaurantDescription">
+                Authentic Italian flavors crafted with love and tradition. From handmade pasta to wood-fired pizzas, 
+                we bring you the taste of Italy with fresh, quality ingredients. Join us in reducing food waste while 
+                enjoying exceptional dining experiences at unbeatable prices.
+            </p>
+            
+            <div class="restaurant-stats">
+                <div class="stat-card">
+                    <span class="stat-number">150+</span>
+                    <span class="stat-label">Meals Saved</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">4.8</span>
+                    <span class="stat-label">Rating</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">95%</span>
+                    <span class="stat-label">Waste Reduced</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">$2,500</span>
+                    <span class="stat-label">Customer Savings</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Menu Section -->
+        <section class="menu-section fade-in">
+            <h2 class="section-title">
+                <i class="fas fa-utensils"></i>
+                Available Deals
+            </h2>
+            <p class="section-subtitle">Fresh meals at incredible prices - limited quantities available!</p>
+            
+            <!-- Menu Filters -->
+            <div class="menu-filters">
+                <button class="filter-btn active" onclick="filterMenu('all')" data-filter="all">
+                    <i class="fas fa-th-large"></i> All Items
+                </button>
+                <button class="filter-btn" onclick="filterMenu('mains')" data-filter="mains">
+                    <i class="fas fa-drumstick-bite"></i> Main Courses
+                </button>
+                <button class="filter-btn" onclick="filterMenu('pizza')" data-filter="pizza">
+                    <i class="fas fa-pizza-slice"></i> Pizza
+                </button>
+                <button class="filter-btn" onclick="filterMenu('pasta')" data-filter="pasta">
+                    <i class="fas fa-stroopwafel"></i> Pasta
+                </button>
+                <button class="filter-btn" onclick="filterMenu('appetizers')" data-filter="appetizers">
+                    <i class="fas fa-seedling"></i> Appetizers
+                </button>
+                <button class="filter-btn" onclick="filterMenu('desserts')" data-filter="desserts">
+                    <i class="fas fa-ice-cream"></i> Desserts
+                </button>
+            </div>
+
+            <!-- Menu Items Grid -->
+            <div class="menu-grid" id="menuGrid">
+                <!-- Menu items will be populated here -->
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section fade-in">
+            <h2 class="section-title">
+                <i class="fas fa-info-circle"></i>
+                Restaurant Information
+            </h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div>
+                        <strong>Phone</strong><br>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div>
+                        <strong>Address</strong><br>
+                        <span>123 Italian Street, Food District</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div>
+                        <strong>Hours</strong><br>
+                        <span>Mon-Sun: 11:00 AM - 11:00 PM</span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div>
+                        <strong>Email</strong><br>
+                        <span>info@mariositalian.com</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // Sample restaurant data
+        const restaurantData = {
+            1: {
+                name: "Mario's Italian Kitchen",
+                cuisine: "Italian",
+                rating: 4.8,
+                icon: "fas fa-pizza-slice",
+                description: "Authentic Italian flavors crafted with love and tradition. From handmade pasta to wood-fired pizzas, we bring you the taste of Italy with fresh, quality ingredients.",
+                menu: [
+                    {
+                        id: 1,
+                        name: "Margherita Pizza Combo",
+                        category: "pizza",
+                        description: "Classic Margherita pizza with fresh mozzarella, tomatoes, and basil. Includes garlic bread and soft drink.",
+                        originalPrice: 25.99,
+                        price: 8.99,
+                        discount: 65,
+                        availability: "5 left",
+                        icon: "fas fa-pizza-slice",
+                        featured: true
+                    },
+                    {
+                        id: 2,
+                        name: "Pasta Carbonara Special",
+                        category: "pasta",
+                        description: "Creamy carbonara with pancetta, eggs, and parmesan cheese. Served with garlic bread.",
+                        originalPrice: 22.99,
+                        price: 9.99,
+                        discount: 57,
+                        availability: "3 left",
+                        icon: "fas fa-stroopwafel"
+                    },
+                    {
+                        id: 3,
+                        name: "Chicken Parmigiana",
+                        category: "mains",
+                        description: "Breaded chicken breast topped with marinara sauce and melted cheese. Served with spaghetti.",
+                        originalPrice: 28.99,
+                        price: 12.99,
+                        discount: 55,
+                        availability: "Available",
+                        icon: "fas fa-drumstick-bite"
+                    },
+                    {
+                        id: 4,
+                        name: "Bruschetta Trio",
+                        category: "appetizers",
+                        description: "Three varieties of bruschetta: classic tomato, mushroom, and olive tapenade.",
+                        originalPrice: 15.99,
+                        price: 6.99,
+                        discount: 56,
+                        availability: "7 left",
+                        icon: "fas fa-seedling"
+                    },
+                    {
+                        id: 5,
+                        name: "Tiramisu Deluxe",
+                        category: "desserts",
+                        description: "Traditional Italian tiramisu with mascarpone, coffee, and cocoa powder.",
+                        originalPrice: 12.99,
+                        price: 4.99,
+                        discount: 62,
+                        availability: "Limited",
+                        icon: "fas fa-ice-cream",
+                        featured: true
+                    },
+                    {
+                        id: 6,
+                        name: "Seafood Risotto",
+                        category: "mains",
+                        description: "Creamy risotto with mixed seafood, saffron, and white wine. A true Italian delicacy.",
+                        originalPrice: 32.99,
+                        price: 14.99,
+                        discount: 55,
+                        availability: "2 left",
+                        icon: "fas fa-fish"
+                    }
+                ]
+            },
+            2: {
+                name: "Burger Junction",
+                cuisine: "American",
+                rating: 4.5,
+                icon: "fas fa-hamburger",
+                description: "Premium burgers made with locally sourced ingredients. From classic cheeseburgers to gourmet creations.",
+                menu: [
+                    {
+                        id: 1,
+                        name: "Classic Cheeseburger Combo",
+                        category: "mains",
+                        description: "Juicy beef patty with cheese, lettuce, tomato, and our special sauce. Includes fries and drink.",
+                        originalPrice: 18.50,
+                        price: 6.50,
+                        discount: 65,
+                        availability: "Available",
+                        icon: "fas fa-hamburger",
+                        featured: true
+                    }
+                ]
+            }
+        };
+
+        let currentFilter = 'all';
+        let currentRestaurant = null;
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get restaurant ID from URL parameters or default to 1
+            const urlParams = new URLSearchParams(window.location.search);
+            const restaurantId = urlParams.get('id') || '1';
+            loadRestaurant(restaurantId);
+        });
+
+        function loadRestaurant(id) {
+            currentRestaurant = restaurantData[id];
+            if (!currentRestaurant) {
+                currentRestaurant = restaurantData['1']; // Default fallback
+            }
+
+            // Update restaurant info
+            document.getElementById('restaurantName').textContent = currentRestaurant.name;
+            document.getElementById('restaurantRating').textContent = currentRestaurant.rating;
+            document.getElementById('restaurantCuisine').textContent = currentRestaurant.cuisine + ' Cuisine';
+            document.getElementById('restaurantDescription').textContent = currentRestaurant.description;
+            document.querySelector('#restaurantImage i').className = currentRestaurant.icon;
+
+            // Load menu
+            displayMenu();
+        }
+
+        function displayMenu() {
+            const menuGrid = document.getElementById('menuGrid');
+            let filteredMenu = currentRestaurant.menu;
+
+            if (currentFilter !== 'all') {
+                filteredMenu = currentRestaurant.menu.filter(item => item.category === currentFilter);
+            }
+
+            menuGrid.innerHTML = filteredMenu.map(item => {
+                const availabilityClass = item.availability.toLowerCase().includes('left') || item.availability === 'Limited' ? 'limited' : 
+                                        item.availability === 'Sold Out' ? 'sold-out' : '';
+                
+                const isSoldOut = item.availability === 'Sold Out';
+                
+                return `
+                    <div class="menu-item ${item.featured ? 'featured' : ''} fade-in">
+                        ${item.discount ? `<div class="discount-badge">${item.discount}% OFF</div>` : ''}
+                        <div class="menu-item-header">
+                            <div class="menu-item-info">
+                                <h3 class="menu-item-name">${item.name}</h3>
+                                <p class="menu-item-description">${item.description}</p>
+                            </div>
+                            <div class="menu-item-icon">
+                                <i class="${item.icon}"></i>
+                            </div>
+                        </div>
+                        <div class="menu-item-footer">
+                            <div class="price-info">
+                                <span class="original-price">$${item.originalPrice}</span>
+                                <span class="discounted-price">$${item.price}</span>
+                            </div>
+                            ${isSoldOut ? 
+                                `<button class="order-btn disabled" disabled>
+                                    <i class="fas fa-times"></i>
+                                    Sold Out
+                                </button>` :
+                                `<a href="buy.html?item=${item.id}&restaurant=${currentRestaurant.name.replace(/[^a-zA-Z0-9]/g, '').toLowerCase()}" 
+                                   class="order-btn">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    Order Now
+                                </a>`
+                            }
+                        </div>
+                        <div class="availability ${availabilityClass}">
+                            <i class="fas fa-clock"></i> ${item.availability}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterMenu(category) {
+            currentFilter = category;
+            
+            // Update filter buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-filter="${category}"]`).classList.add('active');
+            
+            displayMenu();
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+
+        // Add some interactivity
+        document.addEventListener('scroll', function() {
+            const cards = document.querySelectorAll('.menu-item');
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                if (rect.top < window.innerHeight && rect.bottom > 0) {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

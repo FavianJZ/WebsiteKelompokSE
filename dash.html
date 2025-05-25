@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZeroWaste - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/dash.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <a href="#" class="logo">ZeroWaste</a>
+            <button class="menu-toggle" onclick="toggleMobileMenu()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="user-info">
+                <div class="user-avatar">JD</div>
+                <span class="user-name">John Doe</span>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i> Logout
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <div class="user-info" style="display: flex; flex-direction: column; align-items: center; margin-bottom: 2rem;">
+            <div class="user-avatar" style="margin-bottom: 1rem;">JD</div>
+            <span class="user-name" style="margin-bottom: 1rem;">John Doe</span>
+            <button class="logout-btn" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+        <button class="action-btn" style="width: 100%; margin-bottom: 1rem;" onclick="closeMobileMenu()">
+            <i class="fas fa-times action-icon"></i>
+            <span class="action-text">Close Menu</span>
+        </button>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <section class="welcome-section">
+            <h1 class="welcome-title">Welcome back, John!</h1>
+            <p class="welcome-subtitle">Discover amazing deals on surplus food from your favorite restaurants and help reduce food waste.</p>
+        </section>
+
+        <!-- Navigation Section -->
+        <nav class="navigation-section">
+            <h2 class="section-title">Quick Navigation</h2>
+            <div class="nav-grid">
+                <a href="#" class="nav-item" onclick="browseDeals()">
+                    <div class="nav-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">Browse Deals</h3>
+                        <p class="nav-description">Explore all available food deals</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                
+                <a href="#" class="nav-item" onclick="viewOrders()">
+                    <div class="nav-icon">
+                        <i class="fas fa-receipt"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">My Orders</h3>
+                        <p class="nav-description">View your order history</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                
+                <a href="#" class="nav-item" onclick="viewResto()">
+                    <div class="nav-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">Resto</h3>
+                        <p class="nav-description">Your favorite restaurants</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                
+                <a href="#" class="nav-item" onclick="viewProfile()">
+                    <div class="nav-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">Profile</h3>
+                        <p class="nav-description">Manage your account</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                
+                <a href="#" class="nav-item" onclick="viewCart()">
+                    <div class="nav-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">Cart</h3>
+                        <p class="nav-description">Your latest buy product</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+                
+                <a href="#" class="nav-item" onclick="viewSupport()">
+                    <div class="nav-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <div class="nav-content">
+                        <h3 class="nav-title">Support</h3>
+                        <p class="nav-description">Get help and contact us</p>
+                    </div>
+                    <i class="fas fa-chevron-right nav-arrow"></i>
+                </a>
+            </div>
+        </nav>
+
+        <!-- Stats Section -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon green">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+                <div class="stat-number">24</div>
+                <div class="stat-label">Orders This Month</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon blue">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+                <div class="stat-number">$156</div>
+                <div class="stat-label">Money Saved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon orange">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <div class="stat-number">12.5kg</div>
+                <div class="stat-label">Food Saved</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon purple">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-number">8</div>
+                <div class="stat-label">Favorite Restaurants</div>
+            </div>
+        </div>
+
+        <!-- Featured Deals Section -->
+        <section class="deals-section">
+            <h2 class="section-title">Today's Featured Deals</h2>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-pizza-slice"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Mixed Pizza Combo</h3>
+                        <p class="deal-restaurant">Mario's Italian Kitchen</p>
+                        <div class="deal-price">
+                            <span class="original-price">$25.99</span>
+                            <span class="discounted-price">$8.99</span>
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('pizza-combo')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Gourmet Burger Set</h3>
+                        <p class="deal-restaurant">Burger Junction</p>
+                        <div class="deal-price">
+                            <span class="original-price">$18.50</span>
+                            <span class="discounted-price">$6.50</span>
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('burger-set')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Fresh Sushi Platter</h3>
+                        <p class="deal-restaurant">Sakura Sushi Bar</p>
+                        <div class="deal-price">
+                            <span class="original-price">$32.00</span>
+                            <span class="discounted-price">$12.99</span>
+                            <span class="discount-badge">60% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('sushi-platter')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Gourmet Burger Set</h3>
+                        <p class="deal-restaurant">Burger Junction</p>
+                        <div class="deal-price">
+                            <span class="original-price">$18.50</span>
+                            <span class="discounted-price">$6.50</span>
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('burger-set')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Gourmet Burger Set</h3>
+                        <p class="deal-restaurant">Burger Junction</p>
+                        <div class="deal-price">
+                            <span class="original-price">$18.50</span>
+                            <span class="discounted-price">$6.50</span>
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('burger-set')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-hamburger"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Gourmet Burger Set</h3>
+                        <p class="deal-restaurant">Burger Junction</p>
+                        <div class="deal-price">
+                            <span class="original-price">$18.50</span>
+                            <span class="discounted-price">$6.50</span>
+                            <span class="discount-badge">65% OFF</span>
+                        </div>
+                        <button class="order-btn" onclick="orderDeal('burger-set')">
+                            <i class="fas fa-shopping-cart"></i> Order Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommended Restaurants Section -->
+        <section class="deals-section">
+            <h2 class="section-title">Recommended Restaurants</h2>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Green Bites</h3>
+                        <p class="deal-restaurant">Organic & Sustainable</p>
+                        <div class="deal-price">
+                            <span class="discounted-price">★ 4.7</span>
+                            <span class="discount-badge">Top Rated</span>
+                        </div>
+                        <button class="order-btn" onclick="browseDeals()">
+                            <i class="fas fa-eye"></i> View Deals
+                        </button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Green Bites</h3>
+                        <p class="deal-restaurant">Organic & Sustainable</p>
+                        <div class="deal-price">
+                            <span class="discounted-price">★ 4.7</span>
+                            <span class="discount-badge">Top Rated</span>
+                        </div>
+                        <button class="order-btn" onclick="browseDeals()">
+                            <i class="fas fa-eye"></i> View Deals
+                        </button>
+                    </div>
+                </div>
+
+                <div class="deal-card">
+                    <div class="deal-image">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="deal-content">
+                        <h3 class="deal-title">Green Bites</h3>
+                        <p class="deal-restaurant">Organic & Sustainable</p>
+                        <div class="deal-price">
+                            <span class="discounted-price">★ 4.7</span>
+                            <span class="discount-badge">Top Rated</span>
+                        </div>
+                        <button class="order-btn" onclick="browseDeals()">
+                            <i class="fas fa-eye"></i> View Deals
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+            </div>
+
+    <script src="js/dash.js"></script>
+</body>
+</html>
