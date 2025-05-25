@@ -24,29 +24,34 @@ html_pages = [
 
 page = st.sidebar.selectbox("Pilih Halaman", html_pages)
 
-# Load HTML konten
-html_content = load_file(page)
+# Map halaman HTML ke file CSS sesuai nama di folder css
+css_map = {
+    'signin.html': 'css/sign.css',
+    'signup.html': 'css/sign.css',
+    # Default case, file CSS punya nama sama dengan HTML tapi ekstensi .css
+    # Jadi kalau tidak ada di map, pakai ini:
+    # 'landing.html' -> 'css/landing.css', dst
+}
 
-# Load CSS sesuai halaman (jika ada)
-css_file = os.path.join('css', page.replace('.html', '.css'))
-css_content = ''
+css_file = css_map.get(page, os.path.join('css', page.replace('.html', '.css')))
 if os.path.exists(css_file):
     css_content = load_file(css_file)
     css_tag = f'<style>{css_content}</style>'
 else:
     css_tag = ''
 
-# Load JS sesuai halaman (jika ada)
+# Load file JS sesuai nama halaman
 js_file = os.path.join('js', page.replace('.html', '.js'))
-js_content = ''
 if os.path.exists(js_file):
     js_content = load_file(js_file)
     js_tag = f'<script>{js_content}</script>'
 else:
     js_tag = ''
 
-# Gabungkan semua: CSS + HTML + JS
+# Load HTML
+html_content = load_file(page)
+
+# Gabungkan CSS + HTML + JS
 full_html = css_tag + html_content + js_tag
 
-# Tampilkan di Streamlit
 st.components.v1.html(full_html, height=800, scrolling=True)
